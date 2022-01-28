@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+
+  <style>
+   
+.botaoincluir{
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 1px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 2px 10px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 12px;
+    width: 230px;
+}
+
+.botaoincluir2{
+    background-color: #F5F5FF; 
+    color: black; 
+    border: 2px solid #008CBA;
+}
+
+.botaoincluir2:hover {
+    background-color: #D2D2FF;
+    color: black;
+}
+    
+.legendtitulo {
+        font-size: 18px; 
+        font-weight: bold;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        color: #000066;
+        font-style: italic;
+        margin-bottom: 20px;
+    }  
+
+</style>
+
+<script>
+
+var indexteste = 0;
+
+function adicionarTR(){
+        var qtdRows = document.getElementById("tblListaProduto").rows.length;
+        var table = document.getElementById("tblListaProduto");
+        var newRow = table.insertRow(qtdRows);
+        var chave = "composto_" + qtdRows;
+        newRow.id = chave;
+        
+        var cel0 = newRow.insertCell(0);
+        var cel1 = newRow.insertCell(1);
+        var cel2 = newRow.insertCell(2);
+        var cel3 = newRow.insertCell(3);
+        var cel4 = newRow.insertCell(4);
+        var cel5 = newRow.insertCell(5);
+
+        cel0.innerHTML = "<tr><td><img src='delete.png' value='Delete' onclick='removerTR(this)'></td>";
+        cel1.innerHTML = "<td><select name='select' style='border:2px solid #c2cbce; width: 120; background-color:#FFFFFF'> <option value='Alimentacao' selected>Alimentação</option> <option value='Hospedagem'>Hospedagem</option><option value='Pedágio'>Pedagio</option><option value='Combustivel'>Combustível</option><option value='Outras'>Outras</option></select></td>";
+        cel2.innerHTML = "<td><input type='text' style='border:2px solid #c2cbce; width: 400; background-color:#FFFFFF' value='" + "" + "'></td>";
+        cel3.innerHTML = "<td><input style='border:2px solid #c2cbce; width: 130; background-color:#FFFFFF' onchange='looptb()' name='valor_unitario[]' class='valor_unitario' type='text' value='" + "0" + "'></td>";
+        cel4.innerHTML = "<td><input style='border:2px solid #c2cbce; width: 130; background-color:#FFFFFF' onchange='looptb()' name='qnt[]' class='qnt' type='text' value='" + "1" + "'></td>";
+       cel5.innerHTML = "<td><input name='total' style='border:2px solid #c2cbce; width: 130; background-color:#FFFFFF; text-align: center' class='total' readonly='readonly' type='text'></td></tr>";
+       
+       alert('incluiu registro');
+       
+
+indexteste = indexteste + 1;
+
+exibedespesas();
+
+// contaregistros();
+
+// looptb();
+
+}
+
+function contaregistros() {
+
+  alert('conta registros');
+  var totregistros = document.getElementById("tblListaProduto").rows.length-1;
+
+if (totregistros == 0)
+{
+escondedespesas();
+}
+else
+{
+mostratotalgeral();
+document.getElementById("totaldespesas").innerHTML = "Despesas: (" + totregistros +")";
+looptb();
+}
+}
+
+var totgeral = 0;
+  
+  function looptb(){
+  var cont = document.getElementById("tblListaProduto").rows.length-1;
+  totgeral = 0;
+      
+  for (var row = 0; row < cont; row++) {
+      
+  let valorUnitario = document.getElementsByClassName('valor_unitario')[row].value;
+  let quantidade = document.getElementsByClassName('qnt')[row].value;
+  let tt = document.getElementsByClassName('total')[row]
+     
+  let total_simple = valorUnitario * quantidade
+  tt.value = total_simple
+  
+  totgeral = totgeral+total_simple;
+  document.getElementById("totaldespesas").innerHTML = "Despesas";
+  
+  };
+ 
+  document.getElementById("totgeral").value = totgeral;
+  
+  if (totgeral > 399)
+  {
+  document.getElementById("totgeral").style.color="#FF0000";
+  }
+  else
+  {
+  document.getElementById("totgeral").style.color="#0000FF";
+  }
+  
+  }
+
+  function removerTR(r) {
+  var x = confirm("Deseja realmente excluir este item?");
+
+  if (x){
+  var i = r.parentNode.parentNode.rowIndex;
+  document.getElementById("myTable").deleteRow(i);
+  contaregistros();
+  looptb();
+      }
+  else {
+      return false;
+        looptb();
+    }
+}
+
+function escondedespesas(){
+document.getElementById('desp').style.visibility = 'hidden';
+}
+
+function exibedespesas(){
+document.getElementById('desp').style.visibility = 'visible';
+}
+
+
+</script>
+
+
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <br/>
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <a class="nav-link" aria-current="page" href="index.html">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="blog.html">Blog</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="fluig.html">Fluig</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="formulario.html">Formulário</a>
+      </li>
+    </ul>
+    
+    <br/>
+
+    
+
+
+     <div class="card">
+      <div class="card-body">
+        <h1>Relatorio Despesas</h1>
+
+      </div>
+    </div>
+
+
+
+  <br/>
+
+  <div class="card">
+    <div class="bg-success p-2 text-dark bg-opacity-10">
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-sm-3">
+          <label for="id_solicitante_nome" class="form-label">Solicitante</label>
+          <input type="text" class="form-control" placeholder="Nome do Solicitante" aria-label="City">
+        </div>
+        <div class="col-sm">
+          <label for="id_solicitante_email" class="form-label">E-mail</label>
+          <input type="text" class="form-control" placeholder="E-mail do Solicitante" aria-label="City">
+        </div>
+        <div class="col-sm">
+          <label for="id_solicitante_empresa" class="form-label">Empresa</label>
+          <input type="text" class="form-control" placeholder="Empresa do Solicitante" aria-label="State">
+        </div>
+        <div class="col-sm">
+          <label for="id_solicitante_area" class="form-label">Área</label>
+          <input type="text" class="form-control" placeholder="Área do Solicitante" aria-label="Zip">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<br/>
+
+<p align="right"> 
+  <button id='totaldespesas' onclick="adicionarTR();" class="botaoincluir botaoincluir2">
+  + Incluir Despesas</button>
+  </p> 
+
+
+  <!-- <div class="card" id="desp" style="visibility:hidden"> -->
+  
+  <div class="card" id="desp" style="visibility:hidden">
+    <div class="bg-success p-2 text-dark bg-opacity-10">
+      <div class="card-body">
+
+        <table cellspacing="10" id="myTable" class="table table-borderless">
+
+          <thead>
+          
+                  <tr  class="active">
+                      <th></th>
+                      <th width="130" align="left">Categoria</th>
+                      <th width="270">Descrição</th>
+                      <th>Valor</th>
+                      <th>Quantidade</th>
+                      <th>Total</th>
+                  </tr>
+          
+          </thead>
+          
+          <tbody id="tblListaProduto">
+
+
+            <tr>
+            </tr>
+            
+            </tbody>
+            
+            
+            <tfoot>
+            <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+            <input id="totgeral" style="text-align: center; width: 130; font-weight:700" readonly="readonly" class="totgeral" value="0"></td>
+            </tr>
+            </tfoot>
+          
+          </table>
+
+          <p align="center"> 
+            <button id='textobotaoincluir' onClick="window.location.href=window.location.href" class="botaoincluir botaoincluir2">Limpar</button>
+            <button id='textobotaoincluir' onclick="looptb();" class="botaoincluir botaoincluir2">loop</button>
+            <button id='textobotaoincluir' onclick="escondedespesas();" class="botaoincluir botaoincluir2">escondedespesas</button>
+            </p>
+
+
+      </div>
+    </div>
+  </div>
+
+<br/>
+
+<div class="card">
+  <div class="bg-success p-2 text-dark bg-opacity-10">
+    <div class="card-body">
+      <h1>Relatorio Despesas4</h1>
+    </div>
+  </div>
+</div>
+
+<br/>
+    
+
+
+
+
+
+
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>
